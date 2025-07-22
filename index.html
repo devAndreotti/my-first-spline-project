@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <!-- ===========================
+         CONFIGURAÇÕES BÁSICAS DA PÁGINA
+         =========================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meu primeiro projeto Spline - Uma experiência 3D interativa">
+    <meta name="keywords" content="Spline, 3D, design, interativo, web">
+    <meta name="author" content="Ricardo Andreotti">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2d1e96">
+
+    <!-- ===========================
+         TÍTULO E RECURSOS EXTERNOS
+         =========================== -->
+    <title>My First Spline Project</title>
+    
+    <!-- Fonte do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Folha de estilos principal -->
+    <link rel="stylesheet" href="src/css/style.css">
+    
+    <!-- Ícone da página -->
+    <link rel="icon" href="src/img/icon.png" alt="Powder Gate logo">
+
+    <!-- ===========================
+         ESTILOS ESPECÍFICOS DO SPLINE
+         =========================== -->
+    <style>
+        /* Container principal do visualizador Spline */
+        #spline-container {
+            width: 100%;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Iframe do Spline sem bordas */
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===========================
+         IMPORTAÇÃO DO VISUALIZADOR SPLINE
+         =========================== -->
+    <!-- Módulo do visualizador Spline 3D -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.33/build/spline-viewer.js"></script>
+
+    <!-- ===========================
+         ELEMENTO PRINCIPAL DO SPLINE
+         =========================== -->
+    <!-- Visualizador 3D interativo -->
+    <spline-viewer id="spline-viewer" role="img" aria-label="Visualização 3D interativa"></spline-viewer>
+
+    <!-- ===========================
+         SCRIPT DE CONFIGURAÇÃO DO SPLINE
+         =========================== -->
+    <script>
+        /**
+         * Função responsável por carregar a cena Spline apropriada
+         * baseada no tamanho da tela do usuário (responsividade)
+         */
+        function loadSplineViewer() {
+            const splineViewer = document.getElementById("spline-viewer");
+
+            // Determina qual cena carregar baseado na largura da tela
+            // Telas menores que 1200px recebem versão otimizada para mobile
+            splineViewer.url = window.innerWidth < 1200
+                ? "https://prod.spline.design/UxlrFkaGg6EtQLFU/scene.splinecode" // 📱 Versão mobile
+                : "https://prod.spline.design/QPo4WtWMHH9XtTQw/scene.splinecode"; // 🖥️ Versão desktop
+        }
+
+        // Inicialização quando o DOM estiver carregado
+        window.addEventListener("DOMContentLoaded", () => {
+            // Carrega a cena apropriada
+            loadSplineViewer();
+
+            const splineViewer = document.getElementById("spline-viewer");
+
+            // Remove o logo do Spline após carregamento (branding)
+            setTimeout(() => {
+                try {
+                    // Acessa o shadow DOM para remover o logo
+                    splineViewer.shadowRoot.querySelector("#logo")?.remove();
+                } catch (e) {
+                    // Ignora erros se não conseguir acessar o shadow DOM
+                    console.log("Logo do Spline não encontrado ou já removido");
+                }
+            }, 0);
+        });
+
+        // Recarrega a cena apropriada quando a janela é redimensionada
+        window.onresize = function () {
+            loadSplineViewer();
+        };
+    </script>
+
+    <!-- ===========================
+         BARRA DE NAVEGAÇÃO
+         =========================== -->
+    <nav class="navbar">
+        <!-- Logo e marca -->
+        <a href="#" class="logo">
+            <img src="src/img/icon.png" alt="Powder Gate logo" class="logo-icon">
+            Spline
+        </a>
+
+        <!-- Links de navegação -->
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Projects</a>
+            <a href="#">About</a>
+            <a href="#" id="contact-btn">Contact</a>
+        </div>
+
+        <!-- Botão do menu hambúrguer (visível apenas em mobile) -->
+        <button class="hamburger-menu" id="hamburger-menu" aria-label="Abrir menu de navegação">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Controles da direita (áudio, tema, login) -->
+        <div class="navbar-right">
+            <!-- Botão de controle de áudio -->
+            <button class="audio-toggle" id="audio-toggle" title="Controle de áudio" aria-label="Controle de áudio">
+                🔊
+            </button>
+            
+            <!-- Botão de alternância de tema -->
+            <button class="theme-toggle" id="theme-toggle" title="Alternar tema" aria-label="Alternar tema">
+                🌙
+            </button>
+            
+            <!-- Botão de login -->
+            <button class="nav-btn ripple">Login</button>
+        </div>
+    </nav>
+
+    <!-- ===========================
+         CONTEÚDO PRINCIPAL
+         =========================== -->
+    <main class="content">
+        <!-- Data e hora atual -->
+        <div class="date" id="current-date"></div>
+        
+        <!-- Título principal -->
+        <h1>My First Spline Project</h1>
+        
+        <!-- Descrição do projeto -->
+        <p>
+            This is an interactive project created with Spline, a 3D design tool for the web.
+            Explore the three-dimensional environment and discover the creative possibilities
+            that Spline offers for immersive web designs.
+        </p>
+        
+        <!-- Botões de ação -->
+        <div class="buttons">
+            <a href="#" class="btn btn-discover ripple">
+                <span class="btn-icon">🔍</span>
+                <span>Discover More</span>
+            </a>
+            <a href="#" class="btn btn-action ripple">
+                <span class="btn-icon">⬇</span>
+                <span>Download Now</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- ===========================
+         MODAL DE CONTATO
+         =========================== -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <!-- Cabeçalho do modal -->
+            <div class="modal-header">
+                <h2>Entre em Contato</h2>
+                <span class="close-btn" id="close-modal">&times;</span>
+            </div>
+
+            <!-- Formulário de contato -->
+            <form id="contact-form" class="contact-form">
+                <!-- Campo Nome -->
+                <div class="form-group">
+                    <label for="name">Nome Completo</label>
+                    <input type="text" id="name" name="name" required>
+                    <span class="error-message" id="name-error"></span>
+                </div>
+
+                <!-- Campo Email -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="error-message" id="email-error"></span>
+                </div>
+
+                <!-- Campo Telefone (opcional) -->
+                <div class="form-group">
+                    <label for="phone">Telefone</label>
+                    <input type="tel" id="phone" name="phone" placeholder="(11) 99999-9999">
+                    <span class="error-message" id="phone-error"></span>
+                </div>
+
+                <!-- Campo Mensagem -->
+                <div class="form-group">
+                    <label for="message">Mensagem</label>
+                    <textarea id="message" name="message" rows="3" required></textarea>
+                    <span class="error-message" id="message-error"></span>
+                </div>
+
+                <!-- Botões de ação do formulário -->
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel ripple" id="cancel-btn">Cancelar</button>
+                    <button type="submit" class="btn-submit ripple">Enviar Mensagem</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===========================
+         SCRIPTS JAVASCRIPT
+         =========================== -->
+    <!-- Sistema de áudio -->
+    <script src="src/js/audio.js"></script>
+    
+    <!-- Script principal da aplicação -->
+    <script src="src/js/main.js"></script>
+    <!-- Script do menu hambúrguer -->
+    <script src="src/js/menu.js"></script>
+</body>
+</html>
+

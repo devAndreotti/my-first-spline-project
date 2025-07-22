@@ -1,0 +1,1509 @@
+/* ===========================
+   PROJETO SPLINE - FOLHA DE ESTILOS PRINCIPAL
+   Autor: Ricardo Andreotti
+   Descrição: Estilos para projeto 3D interativo com Spline
+   =========================== */
+
+/* ===========================
+   1. RESET E CONFIGURAÇÕES GLOBAIS
+   =========================== */
+
+/* Reset universal para garantir consistência entre navegadores */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Configurações base do documento */
+body, html {
+    height: 100%;
+    overflow: hidden; /* Evita scroll para manter foco no 3D */
+    font-family: 'Roboto', sans-serif;
+    background-color: #000;
+    color: #fff;
+    line-height: 1.6;
+}
+
+/* Container responsivo padrão */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ===========================
+   2. VISUALIZADOR SPLINE
+   =========================== */
+
+/* Elemento principal do visualizador 3D */
+spline-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Fica atrás dos elementos de UI */
+}
+
+/* Container do Spline (fallback) */
+#spline-container {
+    width: 100%;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Iframe sem bordas para integração limpa */
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* ===========================
+   3. BARRA DE NAVEGAÇÃO
+   =========================== */
+
+/* Container principal da navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px); /* Efeito de vidro */
+    z-index: 2; /* Acima do Spline */
+    transition: background-color 0.3s ease, padding 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradiente sutil de fundo */
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(45, 30, 150, 0.1), rgba(58, 40, 185, 0.1));
+    z-index: -1;
+}
+
+/* Efeito hover na navbar */
+.navbar:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* --- Logo e Marca --- */
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #d2c7ed;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    color: #fff;
+}
+
+/* Ícone do logo */
+.logo-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* Animação de rotação no hover do logo */
+.logo:hover .logo-icon {
+    transform: rotate(360deg);
+}
+
+/* --- Links de Navegação --- */
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 8px 16px;
+    border-radius: 12px;
+    background: transparent;
+    overflow: hidden;
+}
+
+/* Linha animada sob os links */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 2px;
+    left: 50%;
+    background-color: #d2c7ed;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 1px;
+}
+
+/* Efeito de brilho nos links */
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(210, 199, 237, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+/* Estados hover dos links */
+.nav-links a:hover {
+    color: #d2c7ed;
+    background: rgba(210, 199, 237, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(210, 199, 237, 0.2);
+}
+
+.nav-links a:hover::after {
+    width: 60%;
+}
+
+.nav-links a:hover::before {
+    left: 100%;
+}
+
+/* --- Botão de Login --- */
+.nav-btn {
+    padding: 12px 28px;
+    background: linear-gradient(135deg, 
+        rgba(45, 30, 150, 0.9) 0%,
+        rgba(58, 40, 185, 0.9) 50%,
+        rgba(76, 56, 209, 0.9) 100%
+    );
+    color: white;
+    border: 2px solid rgba(210, 199, 237, 0.3);
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+    position: relative;
+    backdrop-filter: blur(20px);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 
+        0 8px 32px rgba(45, 30, 150, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.nav-btn:hover {
+    background: linear-gradient(135deg, 
+        rgba(58, 40, 185, 0.95) 0%,
+        rgba(76, 56, 209, 0.95) 50%,
+        rgba(94, 72, 233, 0.95) 100%
+    );
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+        0 16px 48px rgba(45, 30, 150, 0.5),
+        0 8px 24px rgba(58, 40, 185, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border-color: rgba(210, 199, 237, 0.6);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.nav-btn:active {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 
+        0 8px 24px rgba(45, 30, 150, 0.4),
+        inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Controles da Navbar (Áudio e Tema) --- */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Botões de controle (áudio e tema) */
+.audio-toggle,
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(210, 199, 237, 0.3);
+    background: linear-gradient(135deg, rgba(45, 30, 150, 0.8), rgba(58, 40, 185, 0.8));
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(45, 30, 150, 0.3);
+}
+
+.audio-toggle:hover,
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(45, 30, 150, 0.5);
+    border-color: rgba(210, 199, 237, 0.6);
+}
+
+.audio-toggle:active,
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+/* ===========================
+   4. CONTEÚDO PRINCIPAL
+   =========================== */
+
+/* Container do conteúdo principal */
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    max-width: 1000px;
+    transform: translateY(-50%);
+    z-index: 2; /* Acima do Spline */
+    pointer-events: none; /* Permite interação com o 3D */
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    backdrop-filter: blur(2px);
+    background: linear-gradient(135deg, rgba(45, 30, 150, 0.15), rgba(58, 40, 185, 0.1));
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid rgba(210, 199, 237, 0.2);
+    box-shadow: 0 20px 60px rgba(45, 30, 150, 0.3);
+}
+
+/* Data e hora */
+.date {
+    font-size: 14px;
+    margin-bottom: 10px;
+    animation: slideInRight 1s ease;
+    color: #a8a8a8;
+}
+
+/* Título principal */
+h1 {
+    font-size: 72px;
+    color: #d2c7ed;
+    margin-bottom: 30px;
+    font-weight: 700;
+    animation: slideInLeft 1s ease;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.1;
+    white-space: nowrap; /* Evita quebra de linha */
+}
+
+/* Parágrafo descritivo */
+p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    font-weight: 300;
+    animation: slideInRight 1s ease 0.3s backwards;
+    text-align: justify;
+    max-width: 60%;
+    color: #e6e6e6;
+}
+
+/* Container dos botões */
+.buttons {
+    display: flex;
+    gap: 20px;
+    animation: slideInUp 1s ease 0.6s backwards;
+}
+
+/* ===========================
+   5. BOTÕES PRINCIPAIS
+   =========================== */
+
+/* Estilo base para todos os botões */
+.btn {
+    padding: 14px 32px;
+    font-size: 18px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: auto; /* Permite clique nos botões */
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(20px);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    animation: buttonSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Animação escalonada dos botões */
+.btn:nth-child(1) { animation-delay: 0.1s; }
+.btn:nth-child(2) { animation-delay: 0.2s; }
+
+/* Texto dos botões */
+.btn span {
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+/* Ícones dos botões */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.btn:hover .btn-icon {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.btn:active {
+    transform: scale(0.96) translateY(2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Botão "Discover More" --- */
+.btn-discover {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.02) 100%
+    );
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    position: relative;
+}
+
+.btn-discover:hover {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 
+        0 16px 48px rgba(255, 255, 255, 0.1),
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* --- Botão "Download Now" --- */
+.btn-action {
+    background: linear-gradient(135deg, 
+        #667eea 0%,
+        #764ba2 50%,
+        #f093fb 100%
+    );
+    background-size: 200% 200%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    position: relative;
+    animation: gradientShift 4s ease infinite;
+}
+
+.btn-action:hover {
+    transform: translateY(-6px) scale(1.08);
+    box-shadow: 
+        0 20px 60px rgba(102, 126, 234, 0.4),
+        0 10px 30px rgba(118, 75, 162, 0.3),
+        0 5px 15px rgba(240, 147, 251, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    animation-duration: 2s;
+}
+
+/* ===========================
+   6. MODAL DE CONTATO
+   =========================== */
+
+/* Overlay do modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px) saturate(120%);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Modal visível */
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    backdrop-filter: blur(15px) saturate(120%);
+}
+
+/* Modal fechando */
+.modal.closing {
+    opacity: 0;
+    backdrop-filter: blur(0px) saturate(100%);
+    background-color: rgba(0, 0, 0, 0);
+    transition: all 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+/* --- Conteúdo do Modal --- */
+.modal-content {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.08), 
+        rgba(255, 255, 255, 0.04)
+    );
+    backdrop-filter: blur(30px) saturate(180%);
+    border-radius: 28px;
+    padding: 0;
+    width: 90%;
+    max-width: 480px;
+    max-height: 70vh;
+    overflow-y: auto;
+    /* Ocultar scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    box-shadow: 
+        0 32px 64px rgba(0, 0, 0, 0.3),
+        0 16px 32px rgba(0, 0, 0, 0.2),
+        0 8px 16px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    position: relative;
+    transform: scale(0.7) translateY(-50px);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Ocultar scrollbar para WebKit browsers */
+.modal-content::-webkit-scrollbar {
+    display: none;
+}
+
+.modal.show .modal-content {
+    transform: scale(1) translateY(0) rotateX(0deg);
+    opacity: 1;
+}
+
+.modal.closing .modal-content {
+    transform: scale(0.8) translateY(50px) rotateX(10deg);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+/* --- Cabeçalho do Modal --- */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 40px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.06) 50%,
+        rgba(255, 255, 255, 0.03) 100%
+    );
+    backdrop-filter: blur(15px);
+    border-radius: 28px 28px 0 0;
+    position: relative;
+}
+
+.modal-header h2 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Botão de fechar */
+.close-btn {
+    color: #fff;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #d2c7ed;
+    transform: scale(1.1);
+}
+
+/* ===========================
+   7. FORMULÁRIO DE CONTATO
+   =========================== */
+
+/* Container do formulário */
+.contact-form {
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+}
+
+/* Grupos de campos */
+.form-group {
+    margin-bottom: 18px;
+}
+
+/* Labels dos campos */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+/* Campos de entrada e textarea */
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.02) 100%
+    );
+    backdrop-filter: blur(20px) saturate(150%);
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+/* Configurações específicas do textarea */
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+    max-height: 120px;
+}
+
+/* Placeholders */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Estado de foco dos campos */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: rgba(210, 199, 237, 0.6);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(255, 255, 255, 0.04) 100%
+    );
+    box-shadow: 
+        0 0 40px rgba(210, 199, 237, 0.4),
+        0 0 20px rgba(210, 199, 237, 0.2),
+        0 16px 48px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px) scale(1.02);
+    backdrop-filter: blur(25px) saturate(180%);
+}
+
+/* Estados de validação */
+.form-group input.error,
+.form-group textarea.error {
+    border-color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.1);
+}
+
+.form-group input.success,
+.form-group textarea.success {
+    border-color: #51cf66;
+    background-color: rgba(81, 207, 102, 0.1);
+}
+
+/* Mensagens de erro */
+.error-message {
+    display: block;
+    color: #f8f9fa; /* Cor mais clara para melhor contraste em fundos escuros */
+    font-size: 14px;
+    margin-top: 5px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(255, 107, 107, 0.8); /* Adicionar sombra para destaque */
+}
+
+.error-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Botões do Formulário --- */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* Estilo base dos botões do formulário */
+.btn-cancel,
+.btn-submit {
+    flex: 1;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    backdrop-filter: blur(20px);
+}
+
+/* Botão Cancelar */
+.btn-cancel {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.02) 100%
+    );
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-cancel:hover {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 
+        0 16px 48px rgba(255, 255, 255, 0.1),
+        0 8px 24px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Botão Enviar */
+.btn-submit {
+    background: linear-gradient(135deg, 
+        #ff6b6b 0%,
+        #ee5a24 50%,
+        #ff9ff3 100%
+    );
+    background-size: 200% 200%;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 12px 40px rgba(255, 107, 107, 0.4),
+        0 6px 20px rgba(238, 90, 36, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    animation: gradientShift 3s ease infinite;
+}
+
+.btn-submit:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 
+        0 20px 60px rgba(255, 107, 107, 0.6),
+        0 10px 30px rgba(238, 90, 36, 0.4),
+        0 5px 15px rgba(255, 159, 243, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    animation-duration: 1.5s;
+}
+
+/* Estados especiais do botão enviar */
+.btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    animation: none;
+}
+
+.btn-submit.loading {
+    position: relative;
+    color: #fff; /* Garante que o texto 'Enviando...' seja visível no tema escuro */
+    pointer-events: none;
+}
+
+/* Spinner de carregamento */
+.btn-submit.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 3px solid transparent;
+    border-top: 3px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 3;
+}
+
+/* ===========================
+   8. EFEITOS VISUAIS E ANIMAÇÕES
+   =========================== */
+
+/* --- Efeito Ripple (Ondulação) --- */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Remover pseudo-elementos conflitantes */
+.ripple::before,
+.ripple::after {
+    display: none !important;
+}
+
+/* --- Efeito de Partículas --- */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: radial-gradient(circle, rgba(210, 199, 237, 0.8), transparent);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle:nth-child(odd) {
+    animation-delay: -2s;
+    animation-duration: 8s;
+}
+
+.particle:nth-child(even) {
+    animation-delay: -4s;
+    animation-duration: 10s;
+}
+
+/* ===========================
+   9. KEYFRAMES E ANIMAÇÕES
+   =========================== */
+
+/* Animação de fade in */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Animações de slide */
+@keyframes slideInLeft {
+    from { transform: translateX(-50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Animação de entrada dos botões */
+@keyframes buttonSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animação de gradiente */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Animação de rotação */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animação de tremor (erro) */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Animação de flutuação das partículas */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-100px) rotate(180deg);
+        opacity: 0.8;
+    }
+}
+
+/* ===========================
+   10. TEMA CLARO
+   =========================== */
+
+/* Variáveis CSS para tema claro */
+[data-theme="light"] {
+    --bg-color: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    --text-color: #2d3748;
+    --accent-color: #2d1e96;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --navbar-bg: rgba(255, 255, 255, 0.95);
+    --shadow-color: rgba(45, 30, 150, 0.1);
+}
+
+/* Aplicação do tema claro */
+[data-theme="light"] body {
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+[data-theme="light"] .content {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.9));
+    border: 1px solid rgba(45, 30, 150, 0.15);
+    box-shadow: 0 20px 60px rgba(45, 30, 150, 0.1);
+    backdrop-filter: blur(20px);
+}
+
+[data-theme="light"] .navbar {
+    background-color: var(--navbar-bg);
+    border-bottom: 1px solid rgba(45, 30, 150, 0.1);
+    box-shadow: 0 2px 20px rgba(45, 30, 150, 0.08);
+}
+
+[data-theme="light"] .navbar:hover {
+    background-color: rgba(255, 255, 255, 0.98);
+}
+
+[data-theme="light"] .logo {
+    color: var(--accent-color);
+}
+
+[data-theme="light"] .nav-links a {
+    color: var(--text-color);
+}
+
+[data-theme="light"] .nav-links a:hover {
+    color: var(--accent-color);
+    background: rgba(45, 30, 150, 0.08);
+}
+
+[data-theme="light"] .nav-btn {
+    background: linear-gradient(135deg, var(--accent-color), #3a28b9);
+    color: white;
+    box-shadow: 0 4px 15px rgba(45, 30, 150, 0.2);
+}
+
+[data-theme="light"] .nav-btn:hover {
+    background: linear-gradient(135deg, #3a28b9, #4c38d1);
+    box-shadow: 0 6px 20px rgba(45, 30, 150, 0.3);
+}
+
+[data-theme="light"] .theme-toggle,
+[data-theme="light"] .audio-toggle {
+    background: linear-gradient(135deg, rgba(45, 30, 150, 0.9), rgba(58, 40, 185, 0.9));
+    border-color: rgba(45, 30, 150, 0.3);
+    box-shadow: 0 2px 8px rgba(45, 30, 150, 0.2);
+}
+
+[data-theme="light"] .theme-toggle:hover,
+[data-theme="light"] .audio-toggle:hover {
+    box-shadow: 0 4px 12px rgba(45, 30, 150, 0.3);
+}
+
+[data-theme="light"] h1 {
+    color: var(--accent-color);
+    text-shadow: 2px 2px 4px rgba(45, 30, 150, 0.1);
+}
+
+[data-theme="light"] p {
+    color: #4a5568;
+}
+
+[data-theme="light"] .date {
+    color: #6b7280;
+}
+
+[data-theme="light"] .btn-discover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+[data-theme="light"] .btn-discover:hover {
+    background-color: rgba(45, 30, 150, 0.1);
+    box-shadow: 0 4px 8px rgba(45, 30, 150, 0.2);
+}
+
+[data-theme="light"] .btn-action {
+    background: linear-gradient(135deg, var(--accent-color), #3a28b9);
+    box-shadow: 0 4px 15px rgba(45, 30, 150, 0.2);
+}
+
+[data-theme="light"] .btn-action:hover {
+    background: linear-gradient(135deg, #3a28b9, #4c38d1);
+    box-shadow: 0 6px 20px rgba(45, 30, 150, 0.3);
+}
+
+/* Modal no tema claro */
+[data-theme="light"] .modal-content {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 249, 250, 0.95));
+    border: 1px solid rgba(45, 30, 150, 0.1);
+    color: var(--text-color);
+    box-shadow: 0 25px 80px rgba(45, 30, 150, 0.15);
+}
+
+[data-theme="light"] .modal-header {
+    border-bottom: 1px solid rgba(45, 30, 150, 0.1);
+}
+
+[data-theme="light"] .modal-header h2 {
+    color: var(--accent-color);
+}
+
+[data-theme="light"] .close-btn {
+    color: var(--text-color);
+}
+
+[data-theme="light"] .close-btn:hover {
+    color: var(--accent-color);
+}
+
+/* Formulário no tema claro */
+[data-theme="light"] .form-group label {
+    color: var(--text-color);
+}
+
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(45, 30, 150, 0.2);
+    color: var(--text-color);
+}
+
+[data-theme="light"] .form-group input:focus,
+[data-theme="light"] .form-group textarea:focus {
+    border-color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 20px rgba(45, 30, 150, 0.1);
+}
+
+[data-theme="light"] .form-group input::placeholder,
+[data-theme="light"] .form-group textarea::placeholder {
+    color: rgba(45, 30, 150, 0.5);
+}
+
+/* Estados de validação no tema claro */
+[data-theme="light"] .form-group input.success,
+[data-theme="light"] .form-group textarea.success {
+    border-color: #51cf66;
+    background-color: rgba(81, 207, 102, 0.15);
+    box-shadow: 
+        0 0 20px rgba(81, 207, 102, 0.3),
+        0 4px 12px rgba(81, 207, 102, 0.2),
+        inset 0 1px 0 rgba(81, 207, 102, 0.3);
+}
+
+[data-theme="light"] .form-group input.error,
+[data-theme="light"] .form-group textarea.error {
+    border-color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.15);
+    box-shadow: 
+        0 0 20px rgba(255, 107, 107, 0.3),
+        0 4px 12px rgba(255, 107, 107, 0.2),
+        inset 0 1px 0 rgba(255, 107, 107, 0.3);
+}
+
+/* Mensagens de erro no tema claro */
+[data-theme="light"] .error-message {
+    color: #dc3545; /* Cor vermelha mais escura para contraste no fundo claro */
+    text-shadow: none; /* Remover sombra no tema claro */
+}
+
+/* Botões do formulário no tema claro */
+[data-theme="light"] .btn-cancel {
+    background-color: rgba(45, 30, 150, 0.1);
+    color: var(--text-color);
+    border-color: rgba(45, 30, 150, 0.2);
+}
+
+[data-theme="light"] .btn-cancel:hover {
+    background-color: rgba(45, 30, 150, 0.15);
+}
+
+[data-theme="light"] .btn-submit {
+    background: linear-gradient(135deg, var(--accent-color), #3a28b9);
+    color: white;
+    border: 2px solid rgba(45, 30, 150, 0.3);
+    box-shadow: 
+        0 12px 40px rgba(45, 30, 150, 0.3),
+        0 6px 20px rgba(58, 40, 185, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+[data-theme="light"] .btn-submit:hover {
+    background: linear-gradient(135deg, #3a28b9, #4c38d1);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 
+        0 20px 60px rgba(45, 30, 150, 0.4),
+        0 10px 30px rgba(58, 40, 185, 0.3),
+        0 5px 15px rgba(76, 56, 209, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    border-color: rgba(45, 30, 150, 0.5);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+/* ===========================
+   11. ACESSIBILIDADE
+   =========================== */
+
+/* Estados de foco para navegação por teclado */
+.btn:focus,
+.nav-btn:focus,
+.btn-cancel:focus,
+.btn-submit:focus,
+.audio-toggle:focus,
+.theme-toggle:focus {
+    outline: 3px solid rgba(210, 199, 237, 0.6);
+    outline-offset: 3px;
+    box-shadow: 
+        0 0 0 3px rgba(210, 199, 237, 0.3),
+        0 16px 48px rgba(45, 30, 150, 0.4);
+}
+
+/* ===========================
+   12. RESPONSIVIDADE
+   =========================== */
+
+/* Tablets e telas médias */
+@media (max-width: 1024px) {
+    .content {
+        padding: 30px;
+        margin: 0 20px;
+    }
+    
+    h1 {
+        font-size: 70px;
+    }
+    
+    /* Desabilitar partículas em dispositivos menores */
+    .particles {
+        display: none;
+    }
+}
+
+/* Smartphones e telas pequenas */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 15px;
+    }
+    
+    /* Ocultar links de navegação em mobile */
+    .nav-links {
+        display: none;
+    }
+    
+    .logo {
+        font-size: 20px;
+    }
+    
+    .logo-icon {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .nav-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    .content {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(100vw - 40px);
+        max-width: 420px;
+        padding: 30px 25px;
+        text-align: center;
+        margin: 0;
+    }
+    
+    h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        white-space: normal;
+        line-height: 1.2;
+    }
+    
+    p {
+        font-size: 16px;
+        margin-bottom: 25px;
+        max-width: 100%;
+        text-align: center;
+    }
+    
+    .buttons {
+        gap: 15px;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .btn {
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 40px;
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .btn-cancel,
+    .btn-submit {
+        padding: 14px 24px;
+        font-size: 15px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .modal-header {
+        padding: 20px 20px 15px;
+    }
+    
+    .modal-header h2 {
+        font-size: 24px;
+    }
+    
+    .contact-form {
+        padding: 20px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn-cancel,
+    .btn-submit {
+        width: 100%;
+    }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 480px) {
+    .content {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(100vw - 30px);
+        max-width: 350px;
+        padding: 25px 20px;
+        text-align: center;
+        margin: 0;
+    }
+    
+    h1 {
+        font-size: 28px;
+        line-height: 1.2;
+        white-space: normal;
+        margin-bottom: 15px;
+    }
+    
+    p {
+        font-size: 14px;
+        line-height: 1.6;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .date {
+        font-size: 12px;
+    }
+    
+    .buttons {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 250px;
+        text-align: center;
+        padding: 12px 18px;
+        font-size: 15px;
+    }
+    
+    .modal-content {
+        width: 98%;
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .modal-header h2 {
+        font-size: 22px;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+/* ===========================
+   13. OTIMIZAÇÕES DE PERFORMANCE
+   =========================== */
+
+/* Redução de movimento para usuários sensíveis */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .particles {
+        display: none;
+    }
+}
+
+/* Classe para reduzir efeitos em dispositivos lentos */
+.reduced-effects * {
+    animation: none !important;
+    transition: none !important;
+}
+
+.reduced-effects .particles {
+    display: none !important;
+}
+
+
+
+/* ===========================
+   14. MENU HAMBÚRGUER E NAVEGAÇÃO MOBILE
+   =========================== */
+
+/* Botão do menu hambúrguer */
+.hamburger-menu {
+    display: none; /* Escondido por padrão em desktop */
+    width: 30px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+    z-index: 1001; /* Acima de outros elementos */
+}
+
+.hamburger-menu .bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 3px;
+    position: absolute;
+    left: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger-menu .bar:nth-child(1) { top: 0; }
+.hamburger-menu .bar:nth-child(2) { top: 8px; }
+.hamburger-menu .bar:nth-child(3) { top: 16px; }
+
+/* Animação do hambúrguer para fechar (X) */
+.hamburger-menu.open .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-menu.open .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.open .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Menu mobile */
+.mobile-nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Começa fora da tela */
+    width: 70%;
+    max-width: 200px;
+    height: 100vh;
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(45, 30, 150, 0.9) 50%,
+        rgba(58, 40, 185, 0.9) 100%
+    );
+    backdrop-filter: blur(20px);
+    padding-top: 80px;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    transition: right 0.4s ease-in-out;
+    z-index: 1000;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+}
+
+.mobile-nav-menu.open {
+    right: 0; /* Desliza para dentro da tela */
+}
+
+.mobile-nav-menu a {
+    width: 100%;
+    padding: 20px 30px;
+    font-size: 18px;
+    text-align: left;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+}
+
+.mobile-nav-menu a:hover {
+    background-color: rgba(210, 199, 237, 0.2);
+    padding-left: 40px;
+    color: #d2c7ed;
+}
+
+/* Ajustes para mobile */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 20px;
+    }
+
+    .nav-links {
+        display: none; /* Oculta links de navegação padrão */
+    }
+
+    .hamburger-menu {
+        display: block; /* Mostra o hambúrguer */
+    }
+
+    .navbar-right {
+        gap: 10px;
+    }
+
+    .audio-toggle, .theme-toggle {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+
+    .nav-btn {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .logo-icon {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px 15px;
+    }
+
+    .mobile-nav-menu {
+        width: 85%;
+    }
+
+    .mobile-nav-menu a {
+        font-size: 16px;
+        padding: 18px 25px;
+    }
+}
+
+
