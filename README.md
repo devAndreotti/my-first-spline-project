@@ -25,7 +25,8 @@ Você pode visualizar o projeto online através deste [link](https://devAndreott
 * ⚡ **Performance Otimizada**: Lazy loading, cache e controle de movimento.
 
 <p align="center">
-  <img src="./src/img/project/mobile-project-v2.png" alt="Captura de tela - versão mobile">
+  <img src="./src/img/project/dark-mobile-project-v2.png" alt="Captura de tela - versão mobile" width="300">
+  <img src="./src/img/project/light-mobile-project-v2.png" alt="Captura de tela - versão mobile" width="300">
 </p>
 
 ## 🛠 Tecnologias Utilizadas
