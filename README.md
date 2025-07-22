@@ -18,15 +18,15 @@ Você pode visualizar o projeto online através deste [link](https://devAndreott
 
 ## ⚙️ Funcionalidades Principais
 * 🧩 **Experiência 3D com Spline**: Visual imersivo carregado diretamente no navegador.
-* 🎨 **Tema Claro/Escuro**: Alternância fluida com armazenamento da preferência.
-* 🔊 **Sistema de Áudio Modular**: Sons reativos e configuráveis.
-* 📱 **Design Responsivo**: Adaptado para todos os tamanhos de tela.
 * 💬 **Modal de Contato Validado**: Máscara de telefone, validação e acessibilidade.
+* 🎨 **Tema Claro/Escuro**: Alternância fluida com armazenamento da preferência.
 * ⚡ **Performance Otimizada**: Lazy loading, cache e controle de movimento.
+* 📱 **Design Responsivo**: Adaptado para todos os tamanhos de tela.
+* 🔊 **Sistema de Áudio Modular**: Sons reativos e configuráveis.
 
 <p align="center">
-  <img src="./src/img/project/dark-mobile-project-v2.png" alt="Captura de tela - versão mobile" width="300">
-  <img src="./src/img/project/light-mobile-project-v2.png" alt="Captura de tela - versão mobile" width="300">
+  <img src="./src/img/project/dark-mobile-project-v2.png" alt="Captura de tela - versão mobile" width="320">
+  <img src="./src/img/project/light-mobile-project-v2.png" alt="Captura de tela - versão mobile" width="310">
 </p>
 
 ## 🛠 Tecnologias Utilizadas
@@ -60,20 +60,22 @@ spline-project-organizado/
 * **CSS**: Modularizado em 13 seções, com variáveis, responsividade e `prefers-reduced-motion`.
 * **JavaScript**: Arquitetura em módulos, documentação JSDoc, validações e localStorage.
 
+### 🚀 Performance
+* Lazy loading de recursos
+* Efeitos com `transform` e `opacity`
+* Otimizações para dispositivos mais lentos
+
 ### ♿ Acessibilidade
 * Navegação via teclado (`Tab`, `Enter`)
 * Leitores de tela suportados
 * Cores com contraste adequado
 * Suporte a movimento reduzido
 
-### 🚀 Performance
-* Lazy loading de recursos
-* Efeitos com `transform` e `opacity`
-* Otimizações para dispositivos mais lentos
-
 ## 📝 Licença
 Este projeto está sob a licença MIT.
 Consulte o arquivo [LICENSE](https://github.com/devAndreotti/devAndreotti/blob/main/LICENSE) para mais detalhes.
+
+<br>
 
 ---
 
