@@ -326,7 +326,7 @@ p {
     margin-bottom: 30px;
     font-weight: 300;
     animation: slideInRight 1s ease 0.3s backwards;
-    text-align: justify;
+    text-align: left;
     max-width: 60%;
     color: #e6e6e6;
 }
